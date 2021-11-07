@@ -70,6 +70,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WeatherDataSet.cs">
+      <DependentUpon>WeatherDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="WeatherDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
