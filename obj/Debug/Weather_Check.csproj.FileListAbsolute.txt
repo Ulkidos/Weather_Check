@@ -1,0 +1,13 @@
+D:\Uchoba\Weather_Check\Weather_Check\bin\Debug\Database1.mdf
+D:\Uchoba\Weather_Check\Weather_Check\bin\Debug\Database1_log.ldf
+D:\Uchoba\Weather_Check\Weather_Check\bin\Debug\Weather_Check.exe.config
+D:\Uchoba\Weather_Check\Weather_Check\bin\Debug\Weather_Check.exe
+D:\Uchoba\Weather_Check\Weather_Check\bin\Debug\Weather_Check.pdb
+D:\Uchoba\Weather_Check\Weather_Check\obj\Debug\Weather_Check.csproj.AssemblyReference.cache
+D:\Uchoba\Weather_Check\Weather_Check\obj\Debug\Weather_Check.csproj.SuggestedBindingRedirects.cache
+D:\Uchoba\Weather_Check\Weather_Check\obj\Debug\Weather_Check.Form1.resources
+D:\Uchoba\Weather_Check\Weather_Check\obj\Debug\Weather_Check.Properties.Resources.resources
+D:\Uchoba\Weather_Check\Weather_Check\obj\Debug\Weather_Check.csproj.GenerateResource.cache
+D:\Uchoba\Weather_Check\Weather_Check\obj\Debug\Weather_Check.csproj.CoreCompileInputs.cache
+D:\Uchoba\Weather_Check\Weather_Check\obj\Debug\Weather_Check.exe
+D:\Uchoba\Weather_Check\Weather_Check\obj\Debug\Weather_Check.pdb
