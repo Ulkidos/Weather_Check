@@ -921,17 +921,32 @@ namespace Weather_Check.WeatherDataSetTableAdapters {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         private void InitCommandCollection() {
-            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[2];
+            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[4];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
             this._commandCollection[0].CommandText = "SELECT День, Температура, Вологість, Осідання, Тиск FROM dbo.Погода";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[1] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[1].Connection = this.Connection;
-            this._commandCollection[1].CommandText = "SELECT День, Температура, Вологість, Осідання, Тиск\r\nFROM     Погода\r\nWHERE  (Ден" +
-                "ь = @param)";
+            this._commandCollection[1].CommandText = "SELECT День, Температура, Вологість, Осідання, Тиск\r\nFROM     Погода\r\nWHERE  (Вол" +
+                "огість > @max) OR\r\n                  (Вологість < @min)";
             this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
-            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@param", global::System.Data.SqlDbType.Date, 3, global::System.Data.ParameterDirection.Input, 0, 0, "День", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@max", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Вологість", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@min", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Вологість", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[2] = new global::System.Data.SqlClient.SqlCommand();
+            this._commandCollection[2].Connection = this.Connection;
+            this._commandCollection[2].CommandText = "SELECT День, Температура, Вологість, Осідання, Тиск\r\nFROM     Погода\r\nWHERE  (Тем" +
+                "пература > @max) OR\r\n                  (Температура < @min)";
+            this._commandCollection[2].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@max", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Температура", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@min", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Температура", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[3] = new global::System.Data.SqlClient.SqlCommand();
+            this._commandCollection[3].Connection = this.Connection;
+            this._commandCollection[3].CommandText = "SELECT День, Температура, Вологість, Осідання, Тиск\r\nFROM     Погода\r\nWHERE  (Тис" +
+                "к > @max) OR\r\n                  (Тиск < @min)";
+            this._commandCollection[3].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@max", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Тиск", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@min", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Тиск", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -962,13 +977,19 @@ namespace Weather_Check.WeatherDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, false)]
-        public virtual int FillBy(WeatherDataSet.ПогодаDataTable dataTable, string param) {
+        public virtual int FillBy(WeatherDataSet.ПогодаDataTable dataTable, global::System.Nullable<int> max, global::System.Nullable<int> min) {
             this.Adapter.SelectCommand = this.CommandCollection[1];
-            if ((param == null)) {
-                this.Adapter.SelectCommand.Parameters[0].Value = global::System.DBNull.Value;
+            if ((max.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[0].Value = ((int)(max.Value));
             }
             else {
-                this.Adapter.SelectCommand.Parameters[0].Value = ((string)(param));
+                this.Adapter.SelectCommand.Parameters[0].Value = global::System.DBNull.Value;
+            }
+            if ((min.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[1].Value = ((int)(min.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
             }
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
@@ -981,13 +1002,115 @@ namespace Weather_Check.WeatherDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
-        public virtual WeatherDataSet.ПогодаDataTable GetDataBy(string param) {
+        public virtual WeatherDataSet.ПогодаDataTable GetDataBy_volog(global::System.Nullable<int> max, global::System.Nullable<int> min) {
             this.Adapter.SelectCommand = this.CommandCollection[1];
-            if ((param == null)) {
-                this.Adapter.SelectCommand.Parameters[0].Value = global::System.DBNull.Value;
+            if ((max.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[0].Value = ((int)(max.Value));
             }
             else {
-                this.Adapter.SelectCommand.Parameters[0].Value = ((string)(param));
+                this.Adapter.SelectCommand.Parameters[0].Value = global::System.DBNull.Value;
+            }
+            if ((min.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[1].Value = ((int)(min.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
+            }
+            WeatherDataSet.ПогодаDataTable dataTable = new WeatherDataSet.ПогодаDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, false)]
+        public virtual int FillBy1(WeatherDataSet.ПогодаDataTable dataTable, global::System.Nullable<int> max, global::System.Nullable<int> min) {
+            this.Adapter.SelectCommand = this.CommandCollection[2];
+            if ((max.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[0].Value = ((int)(max.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[0].Value = global::System.DBNull.Value;
+            }
+            if ((min.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[1].Value = ((int)(min.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
+            }
+            if ((this.ClearBeforeFill == true)) {
+                dataTable.Clear();
+            }
+            int returnValue = this.Adapter.Fill(dataTable);
+            return returnValue;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
+        public virtual WeatherDataSet.ПогодаDataTable GetDataBy_temp(global::System.Nullable<int> max, global::System.Nullable<int> min) {
+            this.Adapter.SelectCommand = this.CommandCollection[2];
+            if ((max.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[0].Value = ((int)(max.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[0].Value = global::System.DBNull.Value;
+            }
+            if ((min.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[1].Value = ((int)(min.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
+            }
+            WeatherDataSet.ПогодаDataTable dataTable = new WeatherDataSet.ПогодаDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, false)]
+        public virtual int FillBy2(WeatherDataSet.ПогодаDataTable dataTable, global::System.Nullable<int> max, global::System.Nullable<int> min) {
+            this.Adapter.SelectCommand = this.CommandCollection[3];
+            if ((max.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[0].Value = ((int)(max.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[0].Value = global::System.DBNull.Value;
+            }
+            if ((min.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[1].Value = ((int)(min.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
+            }
+            if ((this.ClearBeforeFill == true)) {
+                dataTable.Clear();
+            }
+            int returnValue = this.Adapter.Fill(dataTable);
+            return returnValue;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
+        public virtual WeatherDataSet.ПогодаDataTable GetDataBy_tusk(global::System.Nullable<int> max, global::System.Nullable<int> min) {
+            this.Adapter.SelectCommand = this.CommandCollection[3];
+            if ((max.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[0].Value = ((int)(max.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[0].Value = global::System.DBNull.Value;
+            }
+            if ((min.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[1].Value = ((int)(min.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
             }
             WeatherDataSet.ПогодаDataTable dataTable = new WeatherDataSet.ПогодаDataTable();
             this.Adapter.Fill(dataTable);

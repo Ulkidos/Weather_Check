@@ -74,14 +74,15 @@ namespace Weather_Check
                         object id = reader.GetValue(0);
                         object name = reader.GetValue(1);
                         object age = reader.GetValue(2);
+                        object tusk = reader.GetValue(4);
 
                         weat.day[i] = reader.GetValue(0).ToString();
                         weat.temp[i] = Int32.Parse(reader.GetValue(1).ToString());
                         weat.volog[i] = Int32.Parse(reader.GetValue(2).ToString());
-                        weat.tusk[i] = Int32.Parse(reader.GetValue(3).ToString());
+                        weat.tusk[i] = Int32.Parse(reader.GetValue(4).ToString());
                         weat.num = i + 1;
 
-                        Console.WriteLine("{0} \t{1} \t{2}", id, name, age);
+                        Console.WriteLine("{0} \t{1} \t{2} \t{3}", id, name, age, tusk);
                     }
                 }
                 reader.Close();
@@ -126,6 +127,7 @@ namespace Weather_Check
 
         private void основнаТаблицяToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            //dataGridView_General.Dock = DockStyle.Fill;
             if (dataGridView_General.Visible == false)
                 dataGridView_General.Visible = true;
             else dataGridView_General.Visible = false;
@@ -133,25 +135,44 @@ namespace Weather_Check
 
         private void температураToolStripMenuItem_Click(object sender, EventArgs e)
         {            
-            float avg_temp = 0;
+            float avg = 0;
             for (int i = 0; weat.day[i] != null; i++)
             {
-                avg_temp += weat.temp[i];
+                avg += weat.temp[i];
             }
-            Debug.WriteLine(avg_temp);
-            avg_temp /= weat.num;
-            Debug.WriteLine(avg_temp);
+            Debug.WriteLine(avg);
+            avg /= weat.num;
+            Debug.WriteLine(avg);
+            
+            dataGridView_General.DataSource = погодаTableAdapter.GetDataBy_temp((int)avg + Int32.Parse(textBox_temp.Text), (int)avg - Int32.Parse(textBox_temp.Text));
+                       
+        }
 
-            Debug.WriteLine("Start");
-            //int index_anomaly = Int32.Parse(textBox_temp.ToString());
-            int index_anomaly = 4;
+        private void вологістьToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            float avg = 0;
             for (int i = 0; weat.day[i] != null; i++)
             {
-                if (avg_temp + index_anomaly < weat.temp[i] || avg_temp - index_anomaly > weat.temp[i])
-                    Debug.WriteLine(weat.temp[i]);
+                avg += weat.volog[i];
             }
-            Debug.WriteLine("End");
-            погодаTableAdapter.GetDataBy("08.11.2021 0:00:00");
+            avg /= weat.num;
+
+            dataGridView_General.DataSource = погодаTableAdapter.GetDataBy_volog((int)avg + Int32.Parse(textBox_volog.Text), (int)avg - Int32.Parse(textBox_volog.Text));
+        }
+
+        private void тискToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            float avg = 0;
+            for (int i = 0; weat.day[i] != null; i++)
+            {
+                avg += weat.tusk[i];
+            }
+            Debug.WriteLine(avg);
+            avg /= weat.num;
+            Debug.WriteLine(avg);
+
+            dataGridView_General.DataSource = погодаTableAdapter.GetDataBy_tusk((int)avg + Int32.Parse(textBox_tusk.Text), (int)avg - Int32.Parse(textBox_tusk.Text));
+
         }
     }
 }

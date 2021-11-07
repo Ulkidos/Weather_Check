@@ -29,21 +29,20 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.button1 = new System.Windows.Forms.Button();
             this.dataGridView_General = new System.Windows.Forms.DataGridView();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.таблиціToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.основнаТаблицяToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.аномаліїToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.температураToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.вологістьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.тискToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label1 = new System.Windows.Forms.Label();
             this.textBox_temp = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.textBox_volog = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.textBox_tusk = new System.Windows.Forms.TextBox();
-            this.аномаліїToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.температураToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.вологістьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.тискToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.деньDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.температураDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.вологістьDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -52,20 +51,12 @@
             this.погодаBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.weatherDataSet = new Weather_Check.WeatherDataSet();
             this.погодаTableAdapter = new Weather_Check.WeatherDataSetTableAdapters.ПогодаTableAdapter();
+            this.tableAdapterManager1 = new Weather_Check.WeatherDataSetTableAdapters.TableAdapterManager();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_General)).BeginInit();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.погодаBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.weatherDataSet)).BeginInit();
             this.SuspendLayout();
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(284, 63);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
             // 
             // dataGridView_General
             // 
@@ -78,12 +69,11 @@
             this.осіданняDataGridViewTextBoxColumn,
             this.тискDataGridViewTextBoxColumn});
             this.dataGridView_General.DataSource = this.погодаBindingSource;
-            this.dataGridView_General.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView_General.Location = new System.Drawing.Point(0, 28);
+            this.dataGridView_General.Location = new System.Drawing.Point(0, 31);
             this.dataGridView_General.Name = "dataGridView_General";
             this.dataGridView_General.RowHeadersWidth = 51;
             this.dataGridView_General.RowTemplate.Height = 24;
-            this.dataGridView_General.Size = new System.Drawing.Size(800, 422);
+            this.dataGridView_General.Size = new System.Drawing.Size(800, 344);
             this.dataGridView_General.TabIndex = 1;
             this.dataGridView_General.Visible = false;
             // 
@@ -110,60 +100,9 @@
             // основнаТаблицяToolStripMenuItem
             // 
             this.основнаТаблицяToolStripMenuItem.Name = "основнаТаблицяToolStripMenuItem";
-            this.основнаТаблицяToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.основнаТаблицяToolStripMenuItem.Size = new System.Drawing.Size(214, 26);
             this.основнаТаблицяToolStripMenuItem.Text = "Основна таблиця";
             this.основнаТаблицяToolStripMenuItem.Click += new System.EventHandler(this.основнаТаблицяToolStripMenuItem_Click);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 96);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(96, 32);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "Коефіцієнт\r\nТемператури";
-            // 
-            // textBox_temp
-            // 
-            this.textBox_temp.Location = new System.Drawing.Point(15, 142);
-            this.textBox_temp.Name = "textBox_temp";
-            this.textBox_temp.Size = new System.Drawing.Size(100, 22);
-            this.textBox_temp.TabIndex = 4;
-            this.textBox_temp.Text = "4";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(131, 96);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(79, 32);
-            this.label2.TabIndex = 5;
-            this.label2.Text = "Коефіцієнт\r\nВологості";
-            // 
-            // textBox_volog
-            // 
-            this.textBox_volog.Location = new System.Drawing.Point(134, 142);
-            this.textBox_volog.Name = "textBox_volog";
-            this.textBox_volog.Size = new System.Drawing.Size(100, 22);
-            this.textBox_volog.TabIndex = 6;
-            this.textBox_volog.Text = "7";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(259, 96);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(79, 32);
-            this.label3.TabIndex = 7;
-            this.label3.Text = "Коефіцієнт\r\nТиску";
-            // 
-            // textBox_tusk
-            // 
-            this.textBox_tusk.Location = new System.Drawing.Point(262, 142);
-            this.textBox_tusk.Name = "textBox_tusk";
-            this.textBox_tusk.Size = new System.Drawing.Size(100, 22);
-            this.textBox_tusk.TabIndex = 8;
-            this.textBox_tusk.Text = "2";
             // 
             // аномаліїToolStripMenuItem
             // 
@@ -178,21 +117,74 @@
             // температураToolStripMenuItem
             // 
             this.температураToolStripMenuItem.Name = "температураToolStripMenuItem";
-            this.температураToolStripMenuItem.Size = new System.Drawing.Size(183, 26);
+            this.температураToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.температураToolStripMenuItem.Text = "Температура";
             this.температураToolStripMenuItem.Click += new System.EventHandler(this.температураToolStripMenuItem_Click);
             // 
             // вологістьToolStripMenuItem
             // 
             this.вологістьToolStripMenuItem.Name = "вологістьToolStripMenuItem";
-            this.вологістьToolStripMenuItem.Size = new System.Drawing.Size(183, 26);
+            this.вологістьToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.вологістьToolStripMenuItem.Text = "Вологість";
+            this.вологістьToolStripMenuItem.Click += new System.EventHandler(this.вологістьToolStripMenuItem_Click);
             // 
             // тискToolStripMenuItem
             // 
             this.тискToolStripMenuItem.Name = "тискToolStripMenuItem";
-            this.тискToolStripMenuItem.Size = new System.Drawing.Size(183, 26);
+            this.тискToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.тискToolStripMenuItem.Text = "Тиск";
+            this.тискToolStripMenuItem.Click += new System.EventHandler(this.тискToolStripMenuItem_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(13, 378);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(96, 32);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "Коефіцієнт\r\nТемператури";
+            // 
+            // textBox_temp
+            // 
+            this.textBox_temp.Location = new System.Drawing.Point(16, 424);
+            this.textBox_temp.Name = "textBox_temp";
+            this.textBox_temp.Size = new System.Drawing.Size(100, 22);
+            this.textBox_temp.TabIndex = 3;
+            this.textBox_temp.Text = "4";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(132, 378);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(79, 32);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "Коефіцієнт\r\nВологості";
+            // 
+            // textBox_volog
+            // 
+            this.textBox_volog.Location = new System.Drawing.Point(135, 424);
+            this.textBox_volog.Name = "textBox_volog";
+            this.textBox_volog.Size = new System.Drawing.Size(100, 22);
+            this.textBox_volog.TabIndex = 6;
+            this.textBox_volog.Text = "7";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(260, 378);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(79, 32);
+            this.label3.TabIndex = 7;
+            this.label3.Text = "Коефіцієнт\r\nТиску";
+            // 
+            // textBox_tusk
+            // 
+            this.textBox_tusk.Location = new System.Drawing.Point(263, 424);
+            this.textBox_tusk.Name = "textBox_tusk";
+            this.textBox_tusk.Size = new System.Drawing.Size(100, 22);
+            this.textBox_tusk.TabIndex = 8;
+            this.textBox_tusk.Text = "2";
             // 
             // деньDataGridViewTextBoxColumn
             // 
@@ -248,19 +240,24 @@
             // 
             this.погодаTableAdapter.ClearBeforeFill = true;
             // 
+            // tableAdapterManager1
+            // 
+            this.tableAdapterManager1.BackupDataSetBeforeUpdate = false;
+            this.tableAdapterManager1.UpdateOrder = Weather_Check.WeatherDataSetTableAdapters.TableAdapterManager.UpdateOrderOption.InsertUpdateDelete;
+            this.tableAdapterManager1.ПогодаTableAdapter = this.погодаTableAdapter;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.dataGridView_General);
             this.Controls.Add(this.textBox_tusk);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.textBox_volog);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.textBox_temp);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.dataGridView_General);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
@@ -277,8 +274,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.DataGridView dataGridView_General;
         private WeatherDataSet weatherDataSet;
         private System.Windows.Forms.BindingSource погодаBindingSource;
@@ -301,6 +296,7 @@
         private System.Windows.Forms.ToolStripMenuItem температураToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem вологістьToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem тискToolStripMenuItem;
+        private WeatherDataSetTableAdapters.TableAdapterManager tableAdapterManager1;
     }
 }
 
