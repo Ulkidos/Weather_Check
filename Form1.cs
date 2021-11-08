@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Diagnostics;
+using System.Globalization;
 
 
 namespace Weather_Check
@@ -21,6 +22,7 @@ namespace Weather_Check
             public int[] temp = new int [100];
             public int[] volog = new int[100];
             public int[] tusk = new int[100];
+            public float[] osu = new float[100];
             public string[] day = new string[100];
             public int num;
 
@@ -67,22 +69,27 @@ namespace Weather_Check
                 if (reader.HasRows) // если есть данные
                 {
                     // выводим названия столбцов
-                    Console.WriteLine("{0}\t{1}\t{2}", reader.GetName(0), reader.GetName(1), reader.GetName(2));
+                    Console.WriteLine("{0} \t\t\t\t{1} \t{2} \t\t{3} \t\t{4} ", reader.GetName(0), reader.GetName(1), reader.GetName(2), reader.GetName(3), reader.GetName(4));
 
                     for (int i = 0; reader.Read(); i++) // построчно считываем данные
                     {
                         object id = reader.GetValue(0);
                         object name = reader.GetValue(1);
                         object age = reader.GetValue(2);
+                        object osu = reader.GetValue(3);
                         object tusk = reader.GetValue(4);
+
+                        var ci = (CultureInfo)CultureInfo.CurrentCulture.Clone();
+                        ci.NumberFormat.NumberDecimalSeparator = ",";
 
                         weat.day[i] = reader.GetValue(0).ToString();
                         weat.temp[i] = Int32.Parse(reader.GetValue(1).ToString());
                         weat.volog[i] = Int32.Parse(reader.GetValue(2).ToString());
+                        weat.osu[i] = float.Parse(reader.GetValue(3).ToString(), ci);
                         weat.tusk[i] = Int32.Parse(reader.GetValue(4).ToString());
                         weat.num = i + 1;
 
-                        Console.WriteLine("{0} \t{1} \t{2} \t{3}", id, name, age, tusk);
+                        Console.WriteLine("{0} \t\t{1} \t\t\t{2} \t\t\t\t{3}   \t\t\t{4} ", id, name, age, osu, tusk);
                     }
                 }
                 reader.Close();
@@ -128,9 +135,10 @@ namespace Weather_Check
         private void основнаТаблицяToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //dataGridView_General.Dock = DockStyle.Fill;
-            if (dataGridView_General.Visible == false)
+           /* if (dataGridView_General.Visible == false)
                 dataGridView_General.Visible = true;
-            else dataGridView_General.Visible = false;
+            else dataGridView_General.Visible = false;*/
+            dataGridView_General.DataSource = погодаTableAdapter.GetDataBy_all();
         }
 
         private void температураToolStripMenuItem_Click(object sender, EventArgs e)
@@ -173,6 +181,40 @@ namespace Weather_Check
 
             dataGridView_General.DataSource = погодаTableAdapter.GetDataBy_tusk((int)avg + Int32.Parse(textBox_tusk.Text), (int)avg - Int32.Parse(textBox_tusk.Text));
 
+        }
+
+        private void осіданняToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            float avg = 0;
+            int num = 1;
+            for (int i = 0; weat.day[i] != null; i++)
+            {
+                if(weat.osu[i] > 0.2)
+                {
+                    avg += weat.osu[i];
+                    Debug.WriteLine("osu_ = " + weat.osu[i] + " \t osu_sum = " + avg);
+                    num++;
+                }
+            }
+            Debug.WriteLine("osu_sum = " + avg);
+            avg /= num;
+            Debug.WriteLine("osu_avg = " + avg);
+
+            Debug.WriteLine("osu_limit = " + float.Parse(textBox_osu.Text, CultureInfo.InvariantCulture.NumberFormat));
+
+            dataGridView_General.DataSource = погодаTableAdapter.GetDataBy_osu((int)avg + float.Parse(textBox_osu.Text, CultureInfo.InvariantCulture.NumberFormat), (int)avg - float.Parse(textBox_osu.Text, CultureInfo.InvariantCulture.NumberFormat));
+
+        }
+
+        private void дощToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            dataGridView_General.DataSource = погодаTableAdapter.GetDataBy_rain();
+
+        }
+
+        private void туманToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            dataGridView_General.DataSource = погодаTableAdapter.GetDataBy_fog();
         }
     }
 }
