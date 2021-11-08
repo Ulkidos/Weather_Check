@@ -216,5 +216,155 @@ namespace Weather_Check
         {
             dataGridView_General.DataSource = погодаTableAdapter.GetDataBy_fog();
         }
+        
+        private void osu_nothing(object sender, EventArgs e)
+        {
+            checkBox_osu_fog.Checked = false;
+            checkBox_osu_frost.Checked = false;
+            checkBox_osu_rain.Checked = false;
+            checkBox_osu_snow.Checked = false;
+        }
+        private void osu_something(object sender, EventArgs e)
+        {
+            checkBox_osu_nothing.Checked = false;
+        }
+        /*private void volog_norm(object sender, EventArgs e)
+        {
+            checkBox_volog_dry.Checked = false;
+            checkBox_volog_wet.Checked = false;
+        }
+        private void volog_dry(object sender, EventArgs e)
+        {
+            checkBox_volog_norm.Checked = false;
+            checkBox_volog_wet.Checked = false;
+        }
+        private void volog_wet(object sender, EventArgs e)
+        {
+            checkBox_volog_norm.Checked = false;
+            checkBox_volog_dry.Checked = false;
+        }
+        private void tusk_norm(object sender, EventArgs e)
+        {
+            checkBox_tusk_high.Checked = false;
+            checkBox_tusk_low.Checked = false;
+        }
+        private void tusk_high(object sender, EventArgs e)
+        {
+            checkBox_tusk_norm.Checked = false;
+            checkBox_tusk_low.Checked = false;
+        }
+        private void tusk_low(object sender, EventArgs e)
+        {
+            checkBox_tusk_high.Checked = false;
+            checkBox_tusk_norm.Checked = false;
+        }
+        private void temp_norm(object sender, EventArgs e)
+        {
+            checkBox_temp_hot.Checked = false;
+            checkBox_temp_cold.Checked = false;
+        }
+        private void temp_hot(object sender, EventArgs e)
+        {
+            checkBox_temp_norm.Checked = false;
+            checkBox_temp_cold.Checked = false;
+        }
+        private void temp_cold(object sender, EventArgs e)
+        {
+            checkBox_temp_hot.Checked = false;
+            checkBox_temp_norm.Checked = false;
+        }*/
+
+        private void таблицяЗаКритеріямиToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int temp_max, temp_min, volog_max, volog_min, tusk_max, tusk_min;
+            float osu_max, osu_min;
+            string count1, count2, count3, count4, count5;
+            temp_max = 28;
+            temp_min = 5;
+            volog_max = 75;
+            volog_min = 60;
+            osu_max = 10;
+            osu_min = 0;
+            tusk_max =755;
+            tusk_min = 75;
+            count1 = "1";
+            count2 = "1";
+            count3 = "1";
+            count4 = "1";
+            count5 = "1";
+
+            /*Параметри температури*/
+            if (checkBox_temp_hot.Checked == true)
+                temp_max = 100;
+            else temp_max = 28;
+
+            if (checkBox_temp_hot.Checked == true)
+                temp_min = -100;
+            else temp_min = 5;
+
+            /*Праметри тиску*/
+            if (checkBox_tusk_high.Checked == true)
+                tusk_max = 1000;
+            else tusk_max = 754;
+
+            if (checkBox_tusk_low.Checked == true)
+                tusk_min = 750;
+            else tusk_min = 0;
+
+            /*Праметри вологості*/
+            if (checkBox_volog_wet.Checked == true)
+                volog_max = 100;
+            else volog_max = 75;
+
+            if (checkBox_volog_dry.Checked == true)
+                volog_min = 0;
+            else volog_min = 50;
+
+            /*Праметри опадів*/
+            if (checkBox_osu_rain.Checked == true && checkBox_osu_nothing.Checked == true)
+            {
+                osu_max = 100;
+                osu_min = 0;
+            }
+            else if(checkBox_osu_rain.Checked == false && checkBox_osu_nothing.Checked == true)
+            {
+                osu_max = 0;
+                osu_min = 0;
+            }
+            else
+            {
+                osu_max = -5;
+                osu_min = -5;
+            }
+
+            if (checkBox_osu_fog.Checked == true)
+                count5 = "1";
+           else count5 = "0";
+
+            /*Праметри сезону*/
+            if (checkBox_sezon_spring.Checked == true)
+                count1 = "1";
+            else count1 = "0";
+
+            if (checkBox_sezon_summer.Checked == true)
+                count2 = "1";
+            else count2 = "0";
+
+            if (checkBox_sezon_autumn.Checked == true)
+                count3 = "1";
+            else count3 = "0";
+
+            if (checkBox_sezon_winter.Checked == true)
+                count4 = "1";
+            else count4 = "0";
+
+            Debug.WriteLine("\n\ntemp_max = " + temp_max + "\ttemp_min = " + temp_min 
+                + "\ntusk_max = " + tusk_max + "\ttusk_min = " + tusk_min 
+                + "\nvolog_max = " + volog_max + "\tvolog_min = " + volog_min
+                + "\nosu_max = " + osu_max + "\tosu_min = " + osu_min
+                + "\ncount: " + count1 + " " +  count2 + " " + count3 + " " + count4);
+            /*Виклик запиту*/
+            dataGridView_General.DataSource = погодаTableAdapter.GetDataBy_criteria(temp_max, temp_min, volog_max, volog_min, osu_max, osu_min, count5, tusk_max, tusk_min, count4, count3, count2, count1);
+        }
     }
 }

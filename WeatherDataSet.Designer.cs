@@ -921,7 +921,7 @@ namespace Weather_Check.WeatherDataSetTableAdapters {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         private void InitCommandCollection() {
-            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[8];
+            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[9];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
             this._commandCollection[0].CommandText = "SELECT День, Температура, Вологість, Осідання, Тиск FROM dbo.Погода";
@@ -969,6 +969,32 @@ namespace Weather_Check.WeatherDataSetTableAdapters {
             this._commandCollection[7].Connection = this.Connection;
             this._commandCollection[7].CommandText = "SELECT День, Температура, Вологість, Осідання, Тиск FROM dbo.Погода";
             this._commandCollection[7].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[8] = new global::System.Data.SqlClient.SqlCommand();
+            this._commandCollection[8].Connection = this.Connection;
+            this._commandCollection[8].CommandText = @"SELECT День, Температура, Вологість, Осідання, Тиск
+FROM     Погода
+WHERE  (Температура <= @temp_max)  AND (Температура >= @temp_min) AND 
+              (Вологість <= @volog_max) AND (Вологість >= @volog_min) AND 
+              (((Осідання <= @osu_max) AND (Осідання >= @osu_min) OR  ((Осідання <= 0.3) AND (Осідання > 0 ) AND @count5 = 1))) AND 
+              (Тиск <= @tusk_max) AND (Тиск >= @tusk_min) AND(
+              (((datepart(mm, [День]) >= 10) and (datepart(mm, [День]) <= 12)) AND @count4 = 1)or
+              (((datepart(mm, [День]) >= 07) and (datepart(mm, [День]) <= 09)) AND @count3 = 1)or
+              (((datepart(mm, [День]) >= 04) and (datepart(mm, [День]) <= 06)) AND @count2 = 1)or
+              (((datepart(mm, [День]) >= 01) and (datepart(mm, [День]) <= 03)) AND @count1 = 1))";
+            this._commandCollection[8].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[8].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@temp_max", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Температура", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[8].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@temp_min", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Температура", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[8].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@volog_max", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Вологість", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[8].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@volog_min", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Вологість", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[8].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@osu_max", global::System.Data.SqlDbType.Float, 8, global::System.Data.ParameterDirection.Input, 0, 0, "Осідання", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[8].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@osu_min", global::System.Data.SqlDbType.Float, 8, global::System.Data.ParameterDirection.Input, 0, 0, "Осідання", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[8].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@count5", global::System.Data.SqlDbType.VarChar, 1024, global::System.Data.ParameterDirection.Input, 0, 0, "", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[8].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@tusk_max", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Тиск", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[8].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@tusk_min", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Тиск", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[8].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@count4", global::System.Data.SqlDbType.VarChar, 1024, global::System.Data.ParameterDirection.Input, 0, 0, "", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[8].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@count3", global::System.Data.SqlDbType.VarChar, 1024, global::System.Data.ParameterDirection.Input, 0, 0, "", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[8].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@count2", global::System.Data.SqlDbType.VarChar, 1024, global::System.Data.ParameterDirection.Input, 0, 0, "", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[8].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@count1", global::System.Data.SqlDbType.VarChar, 1024, global::System.Data.ParameterDirection.Input, 0, 0, "", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1254,6 +1280,186 @@ namespace Weather_Check.WeatherDataSetTableAdapters {
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
         public virtual WeatherDataSet.ПогодаDataTable GetDataBy_all() {
             this.Adapter.SelectCommand = this.CommandCollection[7];
+            WeatherDataSet.ПогодаDataTable dataTable = new WeatherDataSet.ПогодаDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, false)]
+        public virtual int FillBy7(WeatherDataSet.ПогодаDataTable dataTable, global::System.Nullable<int> temp_max, global::System.Nullable<int> temp_min, global::System.Nullable<int> volog_max, global::System.Nullable<int> volog_min, global::System.Nullable<double> osu_max, global::System.Nullable<double> osu_min, string count5, global::System.Nullable<int> tusk_max, global::System.Nullable<int> tusk_min, string count4, string count3, string count2, string count1) {
+            this.Adapter.SelectCommand = this.CommandCollection[8];
+            if ((temp_max.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[0].Value = ((int)(temp_max.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[0].Value = global::System.DBNull.Value;
+            }
+            if ((temp_min.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[1].Value = ((int)(temp_min.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
+            }
+            if ((volog_max.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[2].Value = ((int)(volog_max.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[2].Value = global::System.DBNull.Value;
+            }
+            if ((volog_min.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[3].Value = ((int)(volog_min.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[3].Value = global::System.DBNull.Value;
+            }
+            if ((osu_max.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[4].Value = ((double)(osu_max.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[4].Value = global::System.DBNull.Value;
+            }
+            if ((osu_min.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[5].Value = ((double)(osu_min.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[5].Value = global::System.DBNull.Value;
+            }
+            if ((count5 == null)) {
+                throw new global::System.ArgumentNullException("count5");
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[6].Value = ((string)(count5));
+            }
+            if ((tusk_max.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[7].Value = ((int)(tusk_max.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[7].Value = global::System.DBNull.Value;
+            }
+            if ((tusk_min.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[8].Value = ((int)(tusk_min.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[8].Value = global::System.DBNull.Value;
+            }
+            if ((count4 == null)) {
+                throw new global::System.ArgumentNullException("count4");
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[9].Value = ((string)(count4));
+            }
+            if ((count3 == null)) {
+                throw new global::System.ArgumentNullException("count3");
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[10].Value = ((string)(count3));
+            }
+            if ((count2 == null)) {
+                throw new global::System.ArgumentNullException("count2");
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[11].Value = ((string)(count2));
+            }
+            if ((count1 == null)) {
+                throw new global::System.ArgumentNullException("count1");
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[12].Value = ((string)(count1));
+            }
+            if ((this.ClearBeforeFill == true)) {
+                dataTable.Clear();
+            }
+            int returnValue = this.Adapter.Fill(dataTable);
+            return returnValue;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
+        public virtual WeatherDataSet.ПогодаDataTable GetDataBy_criteria(global::System.Nullable<int> temp_max, global::System.Nullable<int> temp_min, global::System.Nullable<int> volog_max, global::System.Nullable<int> volog_min, global::System.Nullable<double> osu_max, global::System.Nullable<double> osu_min, string count5, global::System.Nullable<int> tusk_max, global::System.Nullable<int> tusk_min, string count4, string count3, string count2, string count1) {
+            this.Adapter.SelectCommand = this.CommandCollection[8];
+            if ((temp_max.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[0].Value = ((int)(temp_max.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[0].Value = global::System.DBNull.Value;
+            }
+            if ((temp_min.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[1].Value = ((int)(temp_min.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
+            }
+            if ((volog_max.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[2].Value = ((int)(volog_max.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[2].Value = global::System.DBNull.Value;
+            }
+            if ((volog_min.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[3].Value = ((int)(volog_min.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[3].Value = global::System.DBNull.Value;
+            }
+            if ((osu_max.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[4].Value = ((double)(osu_max.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[4].Value = global::System.DBNull.Value;
+            }
+            if ((osu_min.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[5].Value = ((double)(osu_min.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[5].Value = global::System.DBNull.Value;
+            }
+            if ((count5 == null)) {
+                throw new global::System.ArgumentNullException("count5");
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[6].Value = ((string)(count5));
+            }
+            if ((tusk_max.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[7].Value = ((int)(tusk_max.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[7].Value = global::System.DBNull.Value;
+            }
+            if ((tusk_min.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[8].Value = ((int)(tusk_min.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[8].Value = global::System.DBNull.Value;
+            }
+            if ((count4 == null)) {
+                throw new global::System.ArgumentNullException("count4");
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[9].Value = ((string)(count4));
+            }
+            if ((count3 == null)) {
+                throw new global::System.ArgumentNullException("count3");
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[10].Value = ((string)(count3));
+            }
+            if ((count2 == null)) {
+                throw new global::System.ArgumentNullException("count2");
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[11].Value = ((string)(count2));
+            }
+            if ((count1 == null)) {
+                throw new global::System.ArgumentNullException("count1");
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[12].Value = ((string)(count1));
+            }
             WeatherDataSet.ПогодаDataTable dataTable = new WeatherDataSet.ПогодаDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
